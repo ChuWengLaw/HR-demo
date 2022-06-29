@@ -1,28 +1,38 @@
-import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import OffDays from './OffDays';
-import Orders from './Orders';
-import Schedules from './Schedules';
-import ClockIn from './ClockIn';
+import React, { useState, useEffect } from "react"
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
+import MuiDrawer from '@mui/material/Drawer'
+import Box from '@mui/material/Box'
+import MuiAppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import List from '@mui/material/List'
+import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
+import Badge from '@mui/material/Badge'
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
+import Link from '@mui/material/Link'
+import MenuIcon from '@mui/icons-material/Menu'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import NotificationsIcon from '@mui/icons-material/Notifications'
+import { mainListItems, secondaryListItems } from './listItems'
+import Chart from './Chart'
+import OffDays from './OffDays'
+import Orders from './Orders'
+import Schedules from './Schedules'
+import ClockIn from './ClockIn'
+import Collapse from '@mui/material/Collapse'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import LayersIcon from '@mui/icons-material/Layers'
+import DashboardIcon from '@mui/icons-material/Dashboard'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import PeopleIcon from '@mui/icons-material/People'
+import BarChartIcon from '@mui/icons-material/BarChart'
+
 
 function Copyright(props) {
   return (
@@ -34,10 +44,10 @@ function Copyright(props) {
       {new Date().getFullYear()}
       {'.'}
     </Typography>
-  );
+  )
 }
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -55,7 +65,7 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
-}));
+}))
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -81,21 +91,41 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
       }),
     },
   }),
-);
+)
 
-const mdTheme = createTheme();
+const mdTheme = createTheme()
 
 function DashboardContent() {
-  const [open, setOpen] = React.useState(true);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
+  const [open, setOpen] = useState(false)
+  const [collapsables, setCollapsables] = useState([false, false, false, false, false])
+
+  const onListItemClick = (id) => {
+    let temp_collapsables = collapsables
+    let clickedBoolean = !temp_collapsables[id]
+    let result = temp_collapsables.map((item, index) => {
+      if (index !== id) {
+        return false
+      }
+      else {
+        return clickedBoolean
+      } 
+    })
+    let detector = false
+    for (var i = 0; i < result.length; i++) {
+      if (result[i]) {
+        detector = true
+        break
+      }
+    }
+    setOpen(detector)
+    setCollapsables(result)
+  }
 
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar position="absolute" open={true}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -105,7 +135,6 @@ function DashboardContent() {
               edge="start"
               color="inherit"
               aria-label="open drawer"
-              onClick={toggleDrawer}
               sx={{
                 marginRight: '36px',
                 ...(open && { display: 'none' }),
@@ -138,13 +167,54 @@ function DashboardContent() {
               px: [1],
             }}
           >
-            <IconButton onClick={toggleDrawer}>
+            <IconButton>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
+            {
+              <React.Fragment>
+                <ListItemButton key={0} onClick={() => onListItemClick(0)}>
+                  <ListItemIcon>
+                    <DashboardIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Dashboard" />
+                </ListItemButton>
+                <Collapse key={`C0`} in={collapsables[0]} timeout="auto" unmountOnExit>test</Collapse>
+                <ListItemButton key={1} onClick={() => onListItemClick(1)}>
+                  <ListItemIcon>
+                    <ShoppingCartIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Property" />
+                </ListItemButton>
+                <Collapse key={`C1`} in={collapsables[1]} timeout="auto" unmountOnExit>test1</Collapse>
+                <ListItemButton key={2} onClick={() => onListItemClick(2)}>
+                  <ListItemIcon>
+                    <PeopleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Employee Details" />
+                </ListItemButton>
+                <ListItemButton key={3} onClick={() => onListItemClick(3)}>
+                  <ListItemIcon>
+                    <BarChartIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Reports and Claims" />
+                </ListItemButton>
+                <ListItemButton key={4} onClick={() => onListItemClick(4)}>
+                  <ListItemIcon>
+                    <LayersIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Shared Board" />
+                </ListItemButton>
+                <ListItemButton key={5} onClick={() => onListItemClick(5)}>
+                  <ListItemIcon>
+                    <LayersIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Sketch Board" />
+                </ListItemButton>
+              </React.Fragment>
+            }
             <Divider sx={{ my: 1 }} />
             {secondaryListItems}
           </List>
@@ -221,9 +291,9 @@ function DashboardContent() {
         </Box>
       </Box>
     </ThemeProvider>
-  );
+  )
 }
 
 export default function Dashboard() {
-  return <DashboardContent />;
+  return <DashboardContent />
 }
