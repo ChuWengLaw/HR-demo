@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from "react"
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles'
+import { Row, Col, Card, CardBody, Label } from "reactstrap"
+import { useNavigate } from 'react-router-dom'
+
+// Local Imports
+import { mainListItems, secondaryListItems } from './listItems'
+import Chart from './Chart'
+import OffDays from './OffDays'
+import Orders from './Orders'
+import Schedules from './Schedules'
+import ClockIn from './ClockIn'
+
+// MUIs
 import CssBaseline from '@mui/material/CssBaseline'
 import MuiDrawer from '@mui/material/Drawer'
 import Box from '@mui/material/Box'
@@ -14,15 +26,9 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import Link from '@mui/material/Link'
+import NotificationsIcon from '@mui/icons-material/Notifications'
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import NotificationsIcon from '@mui/icons-material/Notifications'
-import { mainListItems, secondaryListItems } from './listItems'
-import Chart from './Chart'
-import OffDays from './OffDays'
-import Orders from './Orders'
-import Schedules from './Schedules'
-import ClockIn from './ClockIn'
 import Collapse from '@mui/material/Collapse'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -32,6 +38,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import PeopleIcon from '@mui/icons-material/People'
 import BarChartIcon from '@mui/icons-material/BarChart'
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports'
 
 
 function Copyright(props) {
@@ -97,7 +104,8 @@ const mdTheme = createTheme()
 
 function DashboardContent() {
   const [open, setOpen] = useState(false)
-  const [collapsables, setCollapsables] = useState([false, false, false, false, false])
+  const [collapsables, setCollapsables] = useState([false, false, false, false, false, false])
+  const navigate = useNavigate()
 
   const onListItemClick = (id) => {
     let temp_collapsables = collapsables
@@ -108,7 +116,7 @@ function DashboardContent() {
       }
       else {
         return clickedBoolean
-      } 
+      }
     })
     let detector = false
     for (var i = 0; i < result.length; i++) {
@@ -121,11 +129,18 @@ function DashboardContent() {
     setCollapsables(result)
   }
 
+  const onDrawerClick = () => {
+    if (open) {
+      setCollapsables([false, false, false, false, false, false])
+    }
+    setOpen(!open)
+  }
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={true}>
+        <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -139,6 +154,7 @@ function DashboardContent() {
                 marginRight: '36px',
                 ...(open && { display: 'none' }),
               }}
+              onClick={() => onDrawerClick()}
             >
               <MenuIcon />
             </IconButton>
@@ -167,7 +183,7 @@ function DashboardContent() {
               px: [1],
             }}
           >
-            <IconButton>
+            <IconButton onClick={() => onDrawerClick()}>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
@@ -181,7 +197,12 @@ function DashboardContent() {
                   </ListItemIcon>
                   <ListItemText primary="Dashboard" />
                 </ListItemButton>
-                <Collapse key={`C0`} in={collapsables[0]} timeout="auto" unmountOnExit>test</Collapse>
+                <Collapse key={`C0`} in={collapsables[0]} timeout="auto" unmountOnExit>
+                  <ListItemButton style={{left: "50px"}} onClick={() => navigate("/agent-management")}>
+                    <SportsEsportsIcon style={{ color: "#1890ff" }} />
+                    <span style={{ fontSize: 16 }}>Games</span>
+                  </ListItemButton>
+                </Collapse>
                 <ListItemButton key={1} onClick={() => onListItemClick(1)}>
                   <ListItemIcon>
                     <ShoppingCartIcon />
@@ -195,24 +216,28 @@ function DashboardContent() {
                   </ListItemIcon>
                   <ListItemText primary="Employee Details" />
                 </ListItemButton>
+                <Collapse key={`C2`} in={collapsables[2]} timeout="auto" unmountOnExit>test2</Collapse>
                 <ListItemButton key={3} onClick={() => onListItemClick(3)}>
                   <ListItemIcon>
                     <BarChartIcon />
                   </ListItemIcon>
                   <ListItemText primary="Reports and Claims" />
                 </ListItemButton>
+                <Collapse key={`C3`} in={collapsables[3]} timeout="auto" unmountOnExit>test3</Collapse>
                 <ListItemButton key={4} onClick={() => onListItemClick(4)}>
                   <ListItemIcon>
                     <LayersIcon />
                   </ListItemIcon>
                   <ListItemText primary="Shared Board" />
                 </ListItemButton>
+                <Collapse key={`C4`} in={collapsables[4]} timeout="auto" unmountOnExit>test4</Collapse>
                 <ListItemButton key={5} onClick={() => onListItemClick(5)}>
                   <ListItemIcon>
                     <LayersIcon />
                   </ListItemIcon>
                   <ListItemText primary="Sketch Board" />
                 </ListItemButton>
+                <Collapse key={`C5`} in={collapsables[5]} timeout="auto" unmountOnExit>test5</Collapse>
               </React.Fragment>
             }
             <Divider sx={{ my: 1 }} />

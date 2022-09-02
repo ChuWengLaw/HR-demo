@@ -1,6 +1,9 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
-import DashboardUI from './common'
+import DashboardUI from './common';
+import history from './Utils/history';
+import { Switch, Router } from "react-router-dom";
+import AppRoute from "./routes/route";
 
 function App() {
   let time = new Date().toLocaleString();
@@ -12,7 +15,9 @@ function App() {
   });
   return (
     <div className="App">
-      <DashboardUI cTime={cTime}/>
+      <Router history={history}>
+        <DashboardUI cTime={cTime} />
+      </Router>
     </div>
   );
 }
