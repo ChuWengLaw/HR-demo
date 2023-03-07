@@ -1,22 +1,13 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
-import { gStore, gCookieKey } from 'Utils/globalStorage';
+import { Routes, Route } from "react-router-dom";
 
-const AppRoute = ({ component: Component, layout: Layout, isAuthProtected, ...rest }) => (
-		<Route {...rest} render={props => {
-			if (isAuthProtected && !gStore.get(gCookieKey.token)) {
-				return (
-					<Redirect to={{ pathname: "/login", state: { from: props.location } }} />
-				);
-			}
-
-			return (
-				<Layout>
-					<Component {...props} />
-				</Layout>
-			);
-		}} />
-	);
+const AppRoute = (props) => {
+	return (
+		<Routes>
+			<Route {...props} element={<props.element />} />
+		</Routes>
+	)
+};
 
 export default AppRoute;
 

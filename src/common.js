@@ -1,4 +1,4 @@
-import Dashboard from './style/dashboard/Dashboard'
+import Dashboard from './style/pages/Dashboard'
 
 function DashboardUI(props) {
   return <Dashboard cTime={props.cTime}/>
