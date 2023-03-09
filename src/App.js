@@ -33,6 +33,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import PeopleIcon from '@mui/icons-material/People'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports'
+import HomeIcon from '@mui/icons-material/Home'
+import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest'
 
 
 const drawerWidth = 240
@@ -138,10 +140,10 @@ function App() {
                 <React.Fragment>
                   <ListItemButton key={0} onClick={() => navigate("/home")}>
                     <ListItemIcon>
-                      <DashboardIcon />
+                      <HomeIcon />
                     </ListItemIcon>
                     <ListItemText primary="Home" />
-                  </ListItemButton>                  
+                  </ListItemButton>
                   <ListItemButton key={1} onClick={() => onListItemClick(1)}>
                     <ListItemIcon>
                       <ShoppingCartIcon />
@@ -153,6 +155,10 @@ function App() {
                       <SportsEsportsIcon style={{ color: "#1890ff" }} />
                       <span style={{ fontSize: 16 }}>E Chart</span>
                     </ListItemButton>
+                    <ListItemButton style={{ left: "50px" }} onClick={() => navigate("/lines")}>
+                      <DashboardIcon style={{ color: "#1890ff" }} />
+                      <span style={{ fontSize: 16 }}>Lines</span>
+                    </ListItemButton>
                   </Collapse>
                   <ListItemButton key={2} onClick={() => onListItemClick(2)}>
                     <ListItemIcon>
@@ -160,7 +166,12 @@ function App() {
                     </ListItemIcon>
                     <ListItemText primary="Employee Details" />
                   </ListItemButton>
-                  <Collapse key={`C2`} in={collapsables[2]} timeout="auto" unmountOnExit>test2</Collapse>
+                  <Collapse key={`C2`} in={collapsables[2]} timeout="auto" unmountOnExit>
+                    <ListItemButton style={{ left: "50px" }} onClick={() => navigate("/interactiveboard")}>
+                      <SettingsSuggestIcon style={{ color: "green" }} />
+                      <span style={{ fontSize: 16 }}>Interactive Board</span>
+                    </ListItemButton>
+                  </Collapse>
                   <ListItemButton key={3} onClick={() => onListItemClick(3)}>
                     <ListItemIcon>
                       <BarChartIcon />

@@ -49,3 +49,38 @@ export function SunBurstOpt(radius, data) {
         }
     }
 }
+
+export function PieOpt(x, series) {
+    return {
+        // title: {
+        //     text: 'Weather Statistics',
+        //     subtext: 'Static Data',
+        //     left: 'center'
+        // },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+            bottom: 10,
+            left: 'center',
+            data: x
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '65%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: series,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    }
+}
